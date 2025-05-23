@@ -1,7 +1,12 @@
+# disclaimer
+the Playwright exporter requires an typescript librairy that is not part of this project (close-source from Berger-Levrault). 
+Typescript code is still outputed, but missing methods errors will occurs when opening the playwright folder.
+
+
 # Installation
 ```st
 Metacello new
-  repository: 'gitlab://gitlab.forge.berger-levrault.com:bl-drit/bl.drit.experiments/software.engineering/software.migration/migration-katalon-playwright:develop/src';
+  repository: 'github://github.com:Evref-BL/famix-katalon-studio:master/src';
   baseline: 'Katalon';
   onConflict: [ :ex | ex useIncoming ];
   onUpgrade: [ :ex | ex useIncoming ];
@@ -20,19 +25,13 @@ KTLModel allInstances.
 (FileLocator home / 'Development/playwright-exports') createDirectory deleteAll.
 
 importer := KTLModelImporter new.
-ktlProject := importer model: KTLModel new; pretreatAndImportsFromFolder: '/Users/nicolashlad/Development/testautoblatm'.
-
-
-zephyrTags := (ZephyrAPI new testcases: 'ATM') at: #values.
+ktlProject := importer model: KTLModel new; pretreatAndImportsFromFolder: '/Development/testKatalon'.
 
 KTLModelExporter new 
 	katalonProject: ktlProject;
-	exportWithZephyrTags: zephyrTags;
-	exportWithLibFolderFromGitLabApi: (GitlabApi new privateToken: 'private-token-forge-api'; hostUrl: 'https://gitlab.forge.berger-levrault.com/api/v4'; repositories );
 	exportWithOriginalLines;
 	exportWithDebug;
 	exportFolder: (FileLocator home / 'Development/playwright-exports/');
 	export. 
- 
 
 ```
